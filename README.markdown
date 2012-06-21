@@ -1,7 +1,8 @@
 Eve Space Trucker
 =================
 
-> Come on, come on, come on, Let's go space trucking -- Deep Purple
+> Come on, come on, come on, Let's go space trucking
+_Deep Purple_
 
 
 ### Introduction
@@ -68,15 +69,15 @@ finally searching the trade route graph to determine the best sequence of trades
         the profit per jump, and the profit per (jump * item), where the number
         of jumps is determined by finding the distance of a shortest path from
         the location of the sell order to the location of the buy order.
-    2.  To reduce the number of routes, routes that have poor profit per
-        jump or profit per (jump * item) are discarded.
+    2.  To reduce the number of routes that need to be considered, routes
+        that have poor profit per jump or profit per (jump * item) are discarded.
     3.  We end up with a graph of viable trade routes between pairs of systems.
         Each trade route stores information about the buy and sell prices,
         quantity and volume of cargo, and distance.
 *   Trade route planning
     1.  Parses input parameters for the initial capital, cargo capacity,
         starting system, and planning time horizon (measured in number of jumps).
-    2.  We search over the graph of trade routes using A*. A* is usually used in
+    2.  We search over the graph of trade routes using `A*`. `A*` is usually used in
         pathfinding, where the idea is to expand paths in increasing order of
         a lower bound on the total path length from the start location to some
         goal location. The difference here is that instead of minimising
