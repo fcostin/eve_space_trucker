@@ -51,44 +51,44 @@ Looking back over it now, after 3.5 years, I can make a few observations:
 There are three phases : data import, construction of the trade route graph, and
 finally searching the trade route graph to determine the best sequence of trades.
 
-1.  Data Import
-    a.  Read in the graph of solar systems, and their connectivity via jump gates. This
+*   Data Import
+    1.  Read in the graph of solar systems, and their connectivity via jump gates. This
         defines the topology of the universe we're going to trade in.
-    b.  Discard solar systems and jumps with low security ratings. This prevents the planner
+    2.  Discard solar systems and jumps with low security ratings. This prevents the planner
         from suggesting shortcuts through bad neighbourhoods where our industrial ship
         would be an easy target for pirates. This adjusts the initial topology.
-    c.  Read in the database of item types. This defines the volume of every commodity
+    3.  Read in the database of item types. This defines the volume of every commodity
         we may consider trading. It is important to consider the volume of cargo when
         trading since even pretend internet spaceships have limited cargo capacity.
-    d.  Now we read in 1 or more files of exported market data. Each market data file
+    4.  Now we read in 1 or more files of exported market data. Each market data file
         lists the buy and sell orders for a single commodity in a single region. A
         region is a subset of solar systems. This data populates a market database.
-2.  Construction of trade route graph
-    a.  We loop over each commodity that has both buy and sell orders, and compute
+*   Construction of trade route graph
+    1.  We loop over each commodity that has both buy and sell orders, and compute
         the profit per jump, and the profit per (jump * item), where the number
         of jumps is determined by finding the distance of a shortest path from
         the location of the sell order to the location of the buy order.
-    b.  To reduce the number of routes, routes that have poor profit per
+    2.  To reduce the number of routes, routes that have poor profit per
         jump or profit per (jump * item) are discarded.
-    c.  We end up with a graph of viable trade routes between pairs of systems.
+    3.  We end up with a graph of viable trade routes between pairs of systems.
         Each trade route stores information about the buy and sell prices,
         quantity and volume of cargo, and distance.
-3.  Trade route planning
-    a.  Parses input parameters for the initial capital, cargo capacity,
+*   Trade route planning
+    1.  Parses input parameters for the initial capital, cargo capacity,
         starting system, and planning time horizon (measured in number of jumps).
-    b.  We search over the graph of trade routes using A*. A* is usually used in
+    2.  We search over the graph of trade routes using A*. A* is usually used in
         pathfinding, where the idea is to expand paths in increasing order of
         a lower bound on the total path length from the start location to some
         goal location. The difference here is that instead of minimising
         distance, we try to maximise net profit / net jumps. So we expand
         trade routes in decreasing order of an upper bound on the total
         profit.
-    c.  When searching, the planner has to ensure that the market database
+    3.  When searching, the planner has to ensure that the market database
         is consistent with the history of trades already performed for the
         current trade route under consideration. Changes to the state of
         the market resulting from buying and selling commodities earlier
         in the trade route have to be tracked as part of the state when
         planning.
-    d.  After finding the best route, the sequence of actions required to
+    4.  After finding the best route, the sequence of actions required to
         carry out the route is displayed.
 
